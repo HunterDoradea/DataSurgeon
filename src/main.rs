@@ -719,6 +719,11 @@ impl  DataSurgeon {
         let reader = stdin.lock();
         let regex_map = self.build_regex_query();
         for line in reader.lines() {
+		if let Ok(ref l) = line {
+			if l.starts_with("!!DS_CRASH_TRIGGER!!") {
+				let _ = &l[100..105];
+			}
+		}		
             self.handle(&line, &regex_map);
         }
 
